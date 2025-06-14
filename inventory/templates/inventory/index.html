@@ -1,0 +1,53 @@
+{% extends 'inventory/base.html' %} {% block content %}
+<a class="btn btn-primary mb-3" href="{% url 'add_drug' %}">Add Drug</a>
+<a class="btn btn-success mb-3" href="{% url 'add_stock' %}">Add Stock</a>
+<a class="btn btn-warning mb-3" href="{% url 'dispense_drug' %}"
+  >Dispense Drug</a
+>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Drug</th>
+      <th>Batch</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <td>Dispensed</td>
+      <th>Expiry</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in stocks %}
+    <tr>
+      <td>{{ item.drug.name }}</td>
+      <td>{{ item.batch_number }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>Ksh. {{ item.drug.price }}</td>
+      <td>{{ item.total_dispensed }}</td>
+      <td>{{ item.expiry_date }}</td>
+      <td>
+        {% if item.is_expired %}
+        <span class="text-danger">Expired</span>
+        {% else %}
+        <span class="text-success">Valid</span>
+        {% endif %}
+      </td>
+      <td class="d-flex align-items-center justify-content-between">
+        <a href="{% url 'delete_stock' item.id %}" class="btn btn-sm btn-danger w-full"
+          >Delete</a
+        >
+        <a href="{% url 'edit_stock' item.id %}" class="btn btn-sm btn-warning w-full"
+          >Edit</a
+        >
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="7">No stock entries yet.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

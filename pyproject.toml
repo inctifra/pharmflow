@@ -1,0 +1,23 @@
+[project]
+name = "pharmflow"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "django>=5.2.3",
+]
+
+[dependency-groups]
+dev = [
+    "crispy-bootstrap5>=2025.6",
+]
+
+[tool.mypy]
+ignore_missing_imports = true
+follow_imports = "silent"
+allow_untyped_globals = true
+allow_untyped_defs = true
+check_untyped_defs = false
+disallow_untyped_calls = false
+disallow_untyped_defs = false
