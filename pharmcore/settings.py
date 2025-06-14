@@ -25,7 +25,9 @@ SECRET_KEY = 'django-insecure-o7x9c-yd=#a=_*fkvfs04+%(d#g4^zv5u91w29721=m+n#1@xq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS:list = []
+ALLOWED_HOSTS:list = [ 'pharmflow.pythonanywhere.com', 
+    '127.0.0.1',                    
+    'localhost',]
 
 
 # Application definition
