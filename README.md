@@ -1,5 +1,5 @@
 
-# 💊 PharmaLite – Pharmacy Inventory Management MVP
+# 💊 Pharmflow – Pharmacy Inventory Management MVP
 
 **Pharmflow** is a simple, minimal Django-based web application built to help small pharmacy stores manage their drug inventory effectively. This MVP version focuses on essential features such as stock tracking, expiry date monitoring, and basic inventory operations — without any authentication or user roles.
 
