@@ -1,0 +1,61 @@
+{% extends 'inventory/base.html' %}
+{% block title %}
+  {{ block.super }} - {{ drug.slug }}
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="col-md-9 col-12">
+      <h2 class="text-body-emphasis">{{ drug.name }}</h2>
+      <p class="fs-5 col-md-8">{{ drug.description|safe }}</p>
+      <hr class="col-3 col-md-2 mb-3 w-100" />
+
+      <h3>Stock</h3>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Batch</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Dispensed</th>
+            <th>Expiry</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in stocks %}
+            <tr>
+              <td>{{ item.batch_number }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>Ksh. {{ item.drug.price }}</td>
+              <td>{{ item.total_dispensed }}</td>
+              <td>{{ item.days_until_expiry }} days</td>
+              <td>
+                {% if item.is_expired %}
+                  <span class="text-danger">Expired</span>
+                {% else %}
+                  <span class="text-success">Valid</span>
+                {% endif %}
+              </td>
+              <td class="d-flex align-items-center justify-content-between">
+                <a href="{% url 'delete_stock' item.id %}" class="btn btn-sm btn-danger w-full">Delete</a>
+                <a href="{% url 'edit_stock' item.id %}" class="btn btn-sm btn-warning w-full">Edit</a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="7">No stock entries yet.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <hr class="" />
+      <a class="btn btn-success mb-3" href="{% url 'add_stock' %}?slug={{drug.slug}}">Add Stock</a>
+        <a class="btn btn-warning mb-3" href="{% url 'dispense_drug' %}?slug={{drug.slug}}">
+        Dispense Drug
+        </a>
+    </div>
+  </div>
+{% endblock %}

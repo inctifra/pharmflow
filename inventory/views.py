@@ -51,3 +51,12 @@ def dispense_drug(request):
     else:
         form = DispenseForm()
     return render(request, 'inventory/form.html', {'form': form, 'title': 'Dispense Drug'})
+
+
+def drug_detail_view(request, slug):
+    drug = get_object_or_404(Drug, slug=slug)
+    context = {
+        "drug": drug,
+        "stocks": drug.stocks()
+    }
+    return render(request, "drug/index.html", context)

@@ -1,10 +1,9 @@
 {% extends 'inventory/base.html' %} {% block content %}
 <a class="btn btn-primary mb-3" href="{% url 'add_drug' %}">Add Drug</a>
 <a class="btn btn-success mb-3" href="{% url 'add_stock' %}">Add Stock</a>
-<a class="btn btn-warning mb-3" href="{% url 'dispense_drug' %}"
-  >Dispense Drug</a
->
-
+<a class="btn btn-warning mb-3" href="{% url 'dispense_drug' %}">
+  Dispense Drug
+</a>
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -12,7 +11,7 @@
       <th>Batch</th>
       <th>Quantity</th>
       <th>Price</th>
-      <td>Dispensed</td>
+      <th>Dispensed</th>
       <th>Expiry</th>
       <th>Status</th>
       <th>Action</th>
@@ -21,7 +20,7 @@
   <tbody>
     {% for item in stocks %}
     <tr>
-      <td>{{ item.drug.name }}</td>
+      <td><a href="{{item.drug.get_absolute_url}}">{{ item.drug.name }}</a></td>
       <td>{{ item.batch_number }}</td>
       <td>{{ item.quantity }}</td>
       <td>Ksh. {{ item.drug.price }}</td>

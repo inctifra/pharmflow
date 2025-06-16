@@ -2,10 +2,13 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from django.db.models import Sum
-
+from django.urls import reverse
+from django.utils.text import slugify
+from datetime import date
 class Drug(models.Model):
     name = models.CharField(max_length=300)
     description = models.TextField()
+    slug = models.SlugField(max_length=300, blank=True)
     price = models.DecimalField(
         max_digits=12,
         decimal_places=2,
@@ -14,6 +17,14 @@ class Drug(models.Model):
 
     def __str__(self):
         return self.name
+    def get_absolute_url(self):
+        return reverse("drug_detail", kwargs={"slug": self.slug})
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+    def stocks(self):
+        return Stock.objects.filter(drug=self)
 
 
 class Stock(models.Model):
@@ -22,7 +33,9 @@ class Stock(models.Model):
     quantity = models.PositiveIntegerField()
     expiry_date = models.DateField()
     added_on_date = models.DateTimeField(auto_now_add=True)
-
+    def days_until_expiry(self):
+        today = date.today()
+        return (self.expiry_date - today).days
     class Meta:
         constraints = [
             models.UniqueConstraint(

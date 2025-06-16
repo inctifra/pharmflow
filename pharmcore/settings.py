@@ -42,8 +42,9 @@ INSTALLED_APPS = [
 
     "inventory",
 
-     "crispy_forms",
+    "crispy_forms",
     "crispy_bootstrap5",
+    "django_browser_reload"
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
@@ -59,6 +60,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if DEBUG:
+    MIDDLEWARE += ["django_browser_reload.middleware.BrowserReloadMiddleware"]
 
 ROOT_URLCONF = 'pharmcore.urls'
 
