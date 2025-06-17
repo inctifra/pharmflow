@@ -52,8 +52,8 @@
         </tbody>
       </table>
       <hr class="" />
-      <a class="btn btn-success mb-3" href="{% url 'add_stock' %}?slug={{drug.slug}}">Add Stock</a>
-        <a class="btn btn-warning mb-3" href="{% url 'dispense_drug' %}?slug={{drug.slug}}">
+      <a class="btn btn-success mb-3" href="{% url 'add_stock' %}?slug={{drug.slug}}&id={{drug.pk}}">Add Stock</a>
+        <a class="btn btn-warning mb-3" href="{% url 'dispense_drug' %}?slug={{drug.slug}}&id={{drug.pk}}">
         Dispense Drug
         </a>
     </div>

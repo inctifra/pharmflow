@@ -53,8 +53,8 @@ def dispense_drug(request):
     return render(request, 'inventory/form.html', {'form': form, 'title': 'Dispense Drug'})
 
 
-def drug_detail_view(request, slug):
-    drug = get_object_or_404(Drug, slug=slug)
+def drug_detail_view(request, slug, pk):
+    drug = get_object_or_404(Drug, slug=slug, pk=pk)
     context = {
         "drug": drug,
         "stocks": drug.stocks()

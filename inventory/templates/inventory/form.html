@@ -1,11 +1,47 @@
 {% extends 'inventory/base.html' %}
-{%load crispy_forms_tags %} 
+{% load crispy_forms_tags %}
 {% block content %}
-<h4>{{ title }}</h4>
-<form method="post">
+  <h4>{{ title }}</h4>
+  <form method="post">
     {% csrf_token %}
     {{ form|crispy }}
     <button type="submit" class="btn btn-primary">Save</button>
     <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
-</form>
+  </form>
+{% endblock %}
+
+{% block js %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
+    const drugId = params.get("id");
+
+    if (drugId) {
+      const drugSelect = document.querySelector("select#id_drug");
+
+      if (drugSelect) {
+        const optionExists = Array.from(drugSelect.options).some(
+          (option) => option.value === drugId
+        );
+
+        if (optionExists) {
+          drugSelect.value = drugId;
+          drugSelect.disabled = true;
+        } else {
+          // Optional fallback if options load late
+          setTimeout(() => {
+            const delayedOptionExists = Array.from(drugSelect.options).some(
+              (option) => option.value === drugId
+            );
+            if (delayedOptionExists) {
+              drugSelect.value = drugId;
+              drugSelect.disabled = true;
+            }
+          }, 300);
+        }
+      }
+    }
+  });
+</script>
+
 {% endblock %}
